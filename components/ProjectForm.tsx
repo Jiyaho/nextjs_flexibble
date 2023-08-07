@@ -7,24 +7,26 @@ import FormField from './FormField';
 import CustomMenu from './CustomMenu';
 import { categoryFilters } from '@/constants';
 import Button from './Button';
-import { createNewProject, fetchToken } from '@/lib/actions';
+import { createNewProject, fetchToken, updateProject } from '@/lib/actions';
 import { useRouter } from 'next/navigation';
+import { FormState, ProjectInterface } from '@/common.types';
 
 type Props = {
   type: string;
   session: SessionInterface;
+  project?: ProjectInterface;
 };
 
-export default function ProjectForm({ type, session }: Props) {
+export default function ProjectForm({ type, session, project }: Props) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [form, setForm] = useState({
-    title: '',
-    description: '',
-    image: '',
-    liveSiteUrl: '',
-    githubUrl: '',
-    category: '',
+  const [form, setForm] = useState<FormState>({
+    title: project?.title || '',
+    description: project?.description || '',
+    image: project?.image || '',
+    liveSiteUrl: project?.liveSiteUrl || '',
+    githubUrl: project?.githubUrl || '',
+    category: project?.category || '',
   });
 
   const handleForSubmit = async (e: FormEvent) => {
@@ -37,7 +39,12 @@ export default function ProjectForm({ type, session }: Props) {
     try {
       if (type === 'create') {
         await createNewProject(form, session?.user?.id, token);
-        router.push('/projects');
+        router.push('/');
+      }
+
+      if (type === 'edit') {
+        await updateProject(form, project?.id as string, token);
+        router.push('/');
       }
     } catch (error) {
       console.log(error);
