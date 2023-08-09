@@ -6,9 +6,9 @@ import {
   getProjectByIdQuery,
   getProjectsOfUserQuery,
   getUserQuery,
-  // projectsQuery,
-  projectsQueryAll,
-  projectsQueryWithFilter,
+  projectsQuery,
+  // projectsQueryAll,
+  // projectsQueryWithFilter,
   updateProjectMutation,
 } from '@/graphql';
 import { GraphQLClient } from 'graphql-request';
@@ -100,15 +100,15 @@ export const createNewProject = async (form: ProjectForm, creatorId: string, tok
 export const fetchAllProjects = async (category?: string | null, endcursor?: string | null) => {
   client.setHeader('x-api-key', apiKey);
 
-  if (category) {
-    return makeGraphQLRequest(projectsQueryWithFilter, { category, endcursor });
-  }
+  // if (category) {
+  //   return makeGraphQLRequest(projectsQueryWithFilter, { category, endcursor });
+  // }
 
-  return makeGraphQLRequest(projectsQueryAll, { endcursor });
+  // return makeGraphQLRequest(projectsQueryAll, { endcursor });
 
-  // const validCategory = category ?? '';
+  const validCategory = category ?? '';
 
-  // return makeGraphQLRequest(projectsQuery, { category: validCategory, endcursor });
+  return makeGraphQLRequest(projectsQuery, { category: validCategory, endcursor });
 };
 
 export const deleteProject = (id: string, token: string) => {
