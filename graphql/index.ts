@@ -54,7 +54,7 @@ export const createUserMutation = `
 	}
 `;
 
-/* export const projectsQuery = `
+export const projectsQuery = `
   query getProjects($category: String, $endcursor: String) {
     projectSearch(first: 8, after: $endcursor, filter: {category: {eq: $category}}) {
       pageInfo {
@@ -82,7 +82,7 @@ export const createUserMutation = `
       }
     }
   }
-`; */
+`;
 
 // add1
 export const projectsQueryAll = `
