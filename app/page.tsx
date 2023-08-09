@@ -25,8 +25,8 @@ type Props = {
   searchParams: SearchParams;
 };
 
-export const dynamic = 'force-dynamic';
-export const dynamicParams = true;
+// export const dynamic = 'force-dynamic';
+// export const dynamicParams = true;
 export const revalidate = 0;
 
 async function Home({ searchParams: { category, endcursor } }: Props) {
